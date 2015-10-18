@@ -1,13 +1,13 @@
 
 #Reproducible Research: Peer Assessment 1
-Boriana Valentinova  
+Boriana Valentinova
 Sunday, October 18, 2015
 
 ##Loading and preprocessing the data
 
 ```{r}
 activity<- read.csv("activity.csv", header=T, sep=",", 
-    colClasses=c("numeric", "character", "numeric"))
+                    colClasses=c("numeric", "character", "numeric"))
 head(activity)
 activity$date <- as.Date(activity$date, "%Y-%m-%d")
 ```
@@ -90,14 +90,14 @@ Create a new factor variable in the dataset with two levels - "weekday" and
 day <- weekdays(as.Date(activity$date))
 daylevel <- vector()
 for (i in 1:nrow(activity)) {
-    if (day[i] == "sábado") {
-        daylevel[i] <- "Weekend"
-    } else if (day[i] == "domingo") {
-        daylevel[i] <- "Weekend"
-    } else {
-        daylevel[i] <- "Weekday"
-    }
-}
+        if (day[i] == "sábado") {
+                daylevel[i] <- "Weekend"
+                } else if (day[i] == "domingo") {
+                        daylevel[i] <- "Weekend"
+                        } else {
+                                daylevel[i] <- "Weekday"
+                                }
+        }
 activity$daylevel <- daylevel
 activity$daylevel <- factor(activity$daylevel)
 ```
@@ -110,5 +110,5 @@ library(lattice)
 stepsByDay <- aggregate(steps ~ interval + daylevel, data = activity, mean)
 names(stepsByDay) <- c("interval", "daylevel", "steps")
 xyplot(steps ~ interval | daylevel, stepsByDay, type = "l", layout = c(1, 2), 
-    xlab = "Interval", ylab = "Number of steps")
+       xlab = "Interval", ylab = "Number of steps")
 ```
